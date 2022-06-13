@@ -76,7 +76,7 @@ const displayMovements = function (movements) {
     containerMovements.insertAdjacentHTML('afterbegin', html); //afterbegin places each element one after the next from the beginning of the HTML element - new child elements will appear before old child elements. 'beforeend' each new element is added after previous element (reverse) - old child elements are added after new child elements
   });
 };
-displayMovements(account1.movements);
+
 // console.log(containerMovements.innerHTML);
 
 const calcDisplayBalance = function (movements) {
@@ -85,30 +85,30 @@ const calcDisplayBalance = function (movements) {
 };
 calcDisplayBalance(account1.movements);
 
-const calcDisplaySummary = function (movements) {
-  const incomes = movements
+const calcDisplaySummary = function (acc) {
+  const incomes = acc.movements
     .filter(mov => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
   labelSumIn.textContent = `${incomes}€`;
 
-  const outcomes = movements
+  const outcomes = acc.movements
     .filter(mov => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
   labelSumOut.textContent = `${Math.abs(outcomes)}€`;
 
-  const interest = movements
+  const interest = acc.movements
     .filter(mov => mov > 0)
-    .map(deposit => (deposit * 1.2) / 100)
+    .map(deposit => (deposit * acc.interestRate) / 100)
     //filtering out anything less than 1 for interest
     .filter((int, i, arr) => {
-      console.log(arr);
+      // console.log(arr);
       return int >= 1;
     })
     .reduce((acc, int) => acc + int, 0);
   labelSumInterest.textContent = `${interest}€`;
 };
 
-calcDisplaySummary(account1.movements);
+// calcDisplaySummary(account1.movements);
 
 const createUserNames = function (accs) {
   accs.forEach(function (acc) {
@@ -122,15 +122,35 @@ const createUserNames = function (accs) {
 
 createUserNames(accounts);
 console.log(accounts);
-const eurToUsd = 1.1;
 
-// const totalDepositUSD = movements
-//   .filter(function (mov) {
-//     return mov > 0;
-//   })
-//   .map(function (mov) {
-//     mov * eurToUsd;
-//   })
-//   .reduce(function (acc, mov) {
-//     acc + mov;
-//   }, 0);
+//Event Handlers
+let currentAccount;
+
+btnLogin.addEventListener('click', function (e) {
+  //Prevents form from submitting
+  e.preventDefault();
+
+  currentAccount = accounts.find(
+    account => account.username === inputLoginUsername.value
+  );
+  console.log(currentAccount);
+
+  //optional chaining - //check LOGIN lecture
+  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+    // Display UI and message
+    labelWelcome.textContent = `Welcome back, ${
+      currentAccount.owner.split(' ')[0]
+    }`;
+    containerApp.style.opacity = 100;
+    //Clear input fields
+    inputLoginUsername.value = inputLoginPin.value = '';
+    //Makes PIN input field lose focus
+    inputLoginPin.blur();
+    // Display movements
+    displayMovements(currentAccount.movements);
+    //Display balance
+    calcDisplayBalance(currentAccount.movements);
+    //Display summary
+    calcDisplaySummary(currentAccount);
+  }
+});
