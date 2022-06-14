@@ -200,3 +200,27 @@ btnTransfer.addEventListener('click', function (e) {
     updateUI(currentAccount);
   }
 });
+
+btnClose.addEventListener('click', function (e) {
+  e.preventDefault();
+  if (
+    currentAccount.username === inputCloseUsername.value &&
+    currentAccount.pin === Number(inputClosePin.value)
+  ) {
+    //findIndex will return the first element in the array for which the condition returns true
+    const index = accounts.findIndex(function (acc) {
+      return acc.username === currentAccount.username;
+    });
+
+    console.log(index);
+    //Delete Account
+    //Use splice() to delete the index (currentAccount) above
+    accounts.splice(index, 1);
+
+    //Hide UI:
+    containerApp.style.opacity = 0;
+  }
+  inputCloseUsername.value = inputClosePin.value = '';
+  console.log(currentAccount);
+  console.log(`delete`);
+});
