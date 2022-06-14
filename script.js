@@ -79,11 +79,13 @@ const displayMovements = function (movements) {
 
 // console.log(containerMovements.innerHTML);
 
-const calcDisplayBalance = function (movements) {
-  const balance = movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `${balance}€`;
+const calcDisplayBalance = function (acc) {
+  acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
+  //made new property on account called balance, used above
+  // acc.balance = balance
+  labelBalance.textContent = `${acc.balance}€`;
 };
-calcDisplayBalance(account1.movements);
+// calcDisplayBalance(account1.movements);
 
 const calcDisplaySummary = function (acc) {
   const incomes = acc.movements
@@ -121,6 +123,16 @@ const createUserNames = function (accs) {
 };
 
 createUserNames(accounts);
+
+const updateUI = function (acc) {
+  //Display movements
+  displayMovements(acc.movements);
+  //Display balance
+  calcDisplayBalance(acc);
+  //Display summary
+  calcDisplaySummary(acc);
+};
+
 console.log(accounts);
 
 //Event Handlers
@@ -136,6 +148,8 @@ btnLogin.addEventListener('click', function (e) {
   console.log(currentAccount);
 
   //optional chaining - //check LOGIN lecture
+  //we use this to prevent an error from occurring if falsy login
+  //credentials are used (or if nothing is used); instead we get 'undefined'
   if (currentAccount?.pin === Number(inputLoginPin.value)) {
     // Display UI and message
     labelWelcome.textContent = `Welcome back, ${
@@ -146,11 +160,43 @@ btnLogin.addEventListener('click', function (e) {
     inputLoginUsername.value = inputLoginPin.value = '';
     //Makes PIN input field lose focus
     inputLoginPin.blur();
-    // Display movements
-    displayMovements(currentAccount.movements);
-    //Display balance
-    calcDisplayBalance(currentAccount.movements);
-    //Display summary
-    calcDisplaySummary(currentAccount);
+
+    // //Display movements
+    // displayMovements(currentAccount.movements);
+    // //Display balance
+    // calcDisplayBalance(currentAccount);
+    // //Display summary
+    // calcDisplaySummary(currentAccount);
+
+    //Update UI
+    updateUI(currentAccount);
+  }
+});
+
+btnTransfer.addEventListener('click', function (e) {
+  e.preventDefault();
+  //Use Number because input values always start as strings
+  const amount = Number(inputTransferAmount.value);
+  const receiverAcc = accounts.find(
+    acc => acc.username === inputTransferTo.value
+  );
+  // console.log(amount, receiverAcc);
+  //sets values to blank after input
+  inputTransferAmount.value = inputTransferTo.value = '';
+
+  //validation for amount
+  if (
+    amount > 0 &&
+    receiverAcc &&
+    //short circuiting
+    currentAccount.balance >= amount &&
+    //again, optional chaining to check if that receiverAcc exists, if it does not it will return undefined
+    receiverAcc?.username !== currentAccount.username
+  ) {
+    // Doing the transfer
+    currentAccount.movements.push(-amount);
+    receiverAcc.movements.push(amount);
+    //Update UI
+    updateUI(currentAccount);
   }
 });
