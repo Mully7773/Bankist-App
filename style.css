@@ -10,7 +10,7 @@ html {
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Space Grotesk', sans-serif;
   color: #444;
   background-color: #f3f3f3;
   height: 100vh;
@@ -208,7 +208,7 @@ nav {
 }
 
 .operation--transfer {
-  background-image: linear-gradient(to top left, #ffb003, #ffcb03);
+  background-image: linear-gradient(to top left, #035bff, #03b8ff);
 }
 
 .operation--loan {
