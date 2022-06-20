@@ -39,7 +39,7 @@ const account2 = {
     '2020-06-25T18:49:59.371Z',
     '2020-07-26T12:01:20.894Z',
   ],
-  currency: 'USD',
+  currency: 'JPY',
   locale: 'ja-JP',
 };
 
@@ -110,6 +110,13 @@ const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
 //Functions
+// const color = function () {
+//   [...document.querySelectorAll('.movements__row')].forEach(function (row, i) {
+//     if (i % 2 === 0) row.style.backgroundColor = 'grey';
+//   });
+// };
+// color();
+
 const formatMovementDate = function (date, locale) {
   const calcDaysPassed = (date1, date2) =>
     Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
@@ -228,6 +235,12 @@ const updateUI = function (acc) {
   calcDisplayBalance(acc);
   //Display summary
   calcDisplaySummary(acc);
+
+  //Color separation for rows
+  [...document.querySelectorAll('.movements__row')].forEach(function (row, i) {
+    //0,2,4,6
+    if (i % 2 === 0) row.style.backgroundColor = '#E8E6E4';
+  });
 };
 
 console.log(accounts);
