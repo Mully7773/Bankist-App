@@ -110,12 +110,6 @@ const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
 //Functions
-// const color = function () {
-//   [...document.querySelectorAll('.movements__row')].forEach(function (row, i) {
-//     if (i % 2 === 0) row.style.backgroundColor = 'grey';
-//   });
-// };
-// color();
 
 const formatMovementDate = function (date, locale) {
   const calcDaysPassed = (date1, date2) =>
@@ -127,6 +121,8 @@ const formatMovementDate = function (date, locale) {
   if (daysPassed === 0) return 'Today';
   if (daysPassed === 1) return 'Yesterday';
   if (daysPassed <= 7) return `${daysPassed} days ago`;
+
+  //Old way
   // else {
   //   const day = `${date.getDate()}`.padStart(2, 0);
   //   const month = `${date.getMonth() + 1}`.padStart(2, 0);
@@ -134,9 +130,12 @@ const formatMovementDate = function (date, locale) {
 
   //   return `${month}/${day}/${year}`;
   // }
+
+  //New way
   return new Intl.DateTimeFormat(locale).format(date);
 };
 
+//For formatting the currency
 const formatCur = function (value, locale, currency) {
   return new Intl.NumberFormat(locale, {
     style: 'currency',
@@ -259,7 +258,7 @@ const startLogoutTimer = function () {
     time--;
   };
 
-  // Set time to 5 minutes
+  // Set time to 3 minutes
   let time = 180;
   // Call the timer every second
   tick();
@@ -318,6 +317,7 @@ btnLogin.addEventListener('click', function (e) {
       options
     ).format(now);
 
+    //Old way
     // const day = `${now.getDate()}`.padStart(2, 0);
     // const month = `${now.getMonth() + 1}`.padStart(2, 0);
     // const year = now.getFullYear();
@@ -337,7 +337,7 @@ btnLogin.addEventListener('click', function (e) {
     // //Display summary
     // calcDisplaySummary(currentAccount);
 
-    //Timer
+    //Timer - to prevent simultaneous login timers
     if (timer) clearInterval(timer);
     timer = startLogoutTimer();
     //Update UI
@@ -389,6 +389,7 @@ btnLoan.addEventListener('click', function (e) {
   const amount = Math.floor(inputLoanAmount.value);
 
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
+    //setTimeout simulates time it takes to get a loan
     setTimeout(function () {
       //Add movement
 
@@ -414,7 +415,7 @@ btnClose.addEventListener('click', function (e) {
     currentAccount.username === inputCloseUsername.value &&
     currentAccount.pin === +inputClosePin.value
   ) {
-    //findIndex will return the first element in the array for which the condition returns true
+    //findIndex will return the first element in the accounts array for which the condition returns true
     const index = accounts.findIndex(function (acc) {
       return acc.username === currentAccount.username;
     });
