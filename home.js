@@ -29,3 +29,40 @@ document.addEventListener('keydown', function (e) {
     closeModal();
   }
 });
+
+//Smooth Scrolling:
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
+
+btnScrollTo.addEventListener('click', function (e) {
+  const s1coords = section1.getBoundingClientRect();
+  console.log(s1coords);
+
+  console.log(e.target.getBoundingClientRect());
+
+  console.log('Current scroll (X/Y)', window.pageXOffset, window.pageYOffset); //shows how far down the page we've scrolled x and y
+
+  console.log(
+    //shows height and width of the current viewport
+    'height/width viewport',
+    //clientHeight does not include scrollbars
+    document.documentElement.clientHeight,
+    document.documentElement.clientWidth
+  );
+
+  //Scrolling - Old Style: scroll to the left and top of the position
+  //of s1coords (section1); however, we must make it relative to the top of the page, not the viewport, so we add the X and Y offset
+  //   window.scrollTo(
+  //     s1coords.left + window.pageXOffset,
+  //     s1coords.top + window.pageYOffset
+  //   );
+  //to make smoothscrolling, use an object literal
+  //   window.scrollTo({
+  //     left: s1coords.left + window.pageXOffset,
+  //     top: s1coords.top + window.pageYOffset,
+  //     behavior: 'smooth',
+  //   });
+
+  //New Style:
+  section1.scrollIntoView({ behavior: 'smooth' });
+});
