@@ -93,3 +93,29 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
     document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
   }
 });
+
+//Tabbed component:
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabsContent = document.querySelectorAll('.operations__content');
+
+tabsContainer.addEventListener('click', function (e) {
+  const clicked = e.target.closest('.operations__tab'); //closest parent with that class name is the button itself
+  console.log(clicked);
+
+  //Guard clause
+  //used to prevent null error when tabsContainer is clicked
+  if (!clicked) return;
+  //clear the class from all of them and add it on one of them to prevent them all from moving up (active tab)
+  tabs.forEach(t => t.classList.remove('operations__tab--active'));
+  clicked.classList.add('operations__tab--active');
+
+  //remove active classes
+  console.log(clicked.dataset.tab);
+  tabsContent.forEach(tc => tc.classList.remove('operations__content--active'));
+
+  //Active content area
+  document
+    .querySelector(`.operations__content--${clicked.dataset.tab}`)
+    .classList.add('operations__content--active');
+});
