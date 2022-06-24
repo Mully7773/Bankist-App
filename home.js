@@ -143,11 +143,26 @@ nav.addEventListener('mouseover', handleHover.bind(0.5));
 nav.addEventListener('mouseout', handleHover.bind(1));
 
 // Sticky Navigation:
-const initialCoords = section1.getBoundingClientRect();
-console.log(initialCoords);
-window.addEventListener('scroll', function () {
-  console.log(window.scrollY);
+const header = document.querySelector('.header');
+const navHeight = nav.getBoundingClientRect().height;
+// console.log(navHeight);
 
-  if (this.window.scrollY > initialCoords.top) nav.classList.add('sticky');
-  else nav.classList.remove('sticky');
+const stickyNav = function (entries) {
+  const [entry] = entries;
+  // console.log(entry);
+  //if isIntersection is false
+  if (!entry.isIntersecting) {
+    nav.classList.add('sticky');
+  } else {
+    nav.classList.remove('sticky');
+  }
+};
+
+const headerObserver = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0,
+  //when zero percent of the header is visible we want to display the navbar
+  rootMargin: `-${navHeight}px`,
+  //nav will appear exactly 90px before the threshold is reached - comes from getBoundingClientRect() - need negative because we want to move backward into the header
 });
+headerObserver.observe(header);
