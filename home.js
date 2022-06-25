@@ -286,7 +286,15 @@ const slider = function () {
     activateDot(curSlide);
   };
 
+  //starts webpage at top of screen
+  const startTop = function () {
+    window.onbeforeunload = function () {
+      window.scrollTo(0, 0);
+    };
+  };
+
   const init = function () {
+    startTop();
     goToSlide(0);
     createDots();
     activateDot(0);
