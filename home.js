@@ -166,3 +166,26 @@ const headerObserver = new IntersectionObserver(stickyNav, {
   //nav will appear exactly 90px before the threshold is reached - comes from getBoundingClientRect() - need negative because we want to move backward into the header
 });
 headerObserver.observe(header);
+
+// Reveal sections on scroll
+const allSections = document.querySelectorAll('.section');
+const revealSection = function (entries, observer) {
+  const [entry] = entries;
+  console.log(entry);
+
+  //guard clause, if it is not intersecting in the viewport, return
+  if (!entry.isIntersecting) return;
+
+  entry.target.classList.remove('section--hidden');
+  //disconnects observe mode
+  observer.unobserve(entry.target);
+};
+
+const sectionObserver = new IntersectionObserver(revealSection, {
+  root: null,
+  threshold: 0.15,
+});
+allSections.forEach(function (section) {
+  sectionObserver.observe(section);
+  section.classList.add('section--hidden');
+});
