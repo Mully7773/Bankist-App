@@ -218,49 +218,101 @@ const imgObserver = new IntersectionObserver(loadImg, {
 imgTargets.forEach(img => imgObserver.observe(img));
 
 // Slider
-const slides = document.querySelectorAll('.slide');
-const slider = document.querySelector('.slider');
-const btnLeft = document.querySelector('.slider__btn--left');
-const btnRight = document.querySelector('.slider__btn--right');
+//stored everything in function so that we don't pollute the global namespace
+const slider = function () {
+  const slides = document.querySelectorAll('.slide');
+  // const slider = document.querySelector('.slider');
+  const btnLeft = document.querySelector('.slider__btn--left');
+  const btnRight = document.querySelector('.slider__btn--right');
+  const dotContainer = document.querySelector('.dots');
 
-let curSlide = 0;
-//slides is a nodelist so we can read length on it
-const maxSlide = slides.length;
+  let curSlide = 0;
+  //slides is a nodelist so we can read length on it
+  const maxSlide = slides.length;
 
-// slider.style.transform = 'scale(0.3)';
-// slider.style.overflow = 'visible';
+  //Functions
+  const createDots = function () {
+    slides.forEach(function (_, i) {
+      dotContainer.insertAdjacentHTML(
+        'beforeend',
+        `<button class="dots__dot" data-slide="${i}"></button>`
+      );
+    });
+  };
 
-// slides.forEach((s, i) => (s.style.transform = `translateX(${100 * i}%)`));
-//first slide at 0, second 100, third, 200, fourth 300 percents
-//goToSlide(0) replaces above code - establishes original slide position upon load
+  const activateDot = function (slide) {
+    document
+      .querySelectorAll('.dots__dot')
+      .forEach(dot => dot.classList.remove('dots__dot--active'));
 
-const goToSlide = function (slide) {
-  slides.forEach(
-    (s, i) => (s.style.transform = `translateX(${100 * (i - slide)}%)`)
-  );
+    document
+      .querySelector(`.dots__dot[data-slide="${slide}"]`)
+      .classList.add('dots__dot--active');
+  };
+
+  // slider.style.transform = 'scale(0.3)';
+  // slider.style.overflow = 'visible';
+
+  // slides.forEach((s, i) => (s.style.transform = `translateX(${100 * i}%)`));
+  //first slide at 0, second 100, third, 200, fourth 300 percents
+  //goToSlide(0) replaces above code - establishes original slide position upon load
+
+  const goToSlide = function (slide) {
+    slides.forEach(
+      (s, i) => (s.style.transform = `translateX(${100 * (i - slide)}%)`)
+    );
+  };
+
+  //Go to next slide
+  const nextSlide = function () {
+    //slide back to first slide
+    //- 1 to make it zero-based
+    if (curSlide === maxSlide - 1) {
+      curSlide = 0;
+    } else {
+      curSlide++;
+    }
+    goToSlide(curSlide);
+    activateDot(curSlide);
+  };
+  //Go to previous slide
+  const prevSlide = function () {
+    if (curSlide === 0) {
+      curSlide = maxSlide - 1;
+    } else {
+      curSlide--;
+    }
+    goToSlide(curSlide);
+    activateDot(curSlide);
+  };
+
+  const init = function () {
+    goToSlide(0);
+    createDots();
+    activateDot(0);
+  };
+  init();
+
+  //Event handlers
+  btnRight.addEventListener('click', nextSlide);
+  //curSlide = 1: -100%, 0%, 100%, 200%
+  btnLeft.addEventListener('click', prevSlide);
+
+  document.addEventListener('keydown', function (e) {
+    console.log(e);
+    if (e.key === 'ArrowLeft') prevSlide();
+    if (e.key === 'ArrowRight') nextSlide();
+    // e.key == 'ArrowRight' && nextSlide(); //short circuiting method
+  });
+
+  dotContainer.addEventListener('click', function (e) {
+    if (e.target.classList.contains('dots__dot')) {
+      // console.log('dot');
+      const { slide } = e.target.dataset;
+      goToSlide(slide);
+      curSlide = parseInt(slide, 10); //prevents strange keyboard behavior after selecting dot
+      activateDot(slide);
+    }
+  });
 };
-goToSlide(0);
-//Go to next slide
-const nextSlide = function () {
-  //slide back to first slide
-  //- 1 to make it zero-based
-  if (curSlide === maxSlide - 1) {
-    curSlide = 0;
-  } else {
-    curSlide++;
-  }
-  goToSlide(curSlide);
-};
-//Go to previous slide
-const prevSlide = function () {
-  if (curSlide === 0) {
-    curSlide = maxSlide - 1;
-  } else {
-    curSlide--;
-  }
-  goToSlide(curSlide);
-};
-
-btnRight.addEventListener('click', nextSlide);
-//curSlide = 1: -100%, 0%, 100%, 200%
-btnLeft.addEventListener('click', prevSlide);
+slider();
