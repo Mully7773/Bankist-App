@@ -81,6 +81,11 @@ btnScrollTo.addEventListener('click', function (e) {
 //   });
 // });
 
+//Separate event listener for login to redirect user to the dashboard
+document.getElementById('login').addEventListener('click', function () {
+  window.location.assign('/dashboard.html');
+});
+
 // Event Delegation:
 // - (this method is better than attaching the same event handler to multiple elements)
 // 1. Add event listener to common parent element
@@ -124,7 +129,7 @@ tabsContainer.addEventListener('click', function (e) {
 // Nav Menu fade animation:
 
 const handleHover = function (e, opacity) {
-  console.log(this, e.currentTarget);
+  // console.log(this, e.currentTarget);
   if (e.target.classList.contains('nav__link')) {
     const link = e.target;
     const siblings = link.closest('nav').querySelectorAll('.nav__link');
@@ -187,7 +192,7 @@ const sectionObserver = new IntersectionObserver(revealSection, {
 });
 allSections.forEach(function (section) {
   sectionObserver.observe(section);
-  // section.classList.add('section--hidden');
+  section.classList.add('section--hidden');
 });
 
 //Lazy loading images
