@@ -5,7 +5,7 @@
 
 ## Link:
 
-Check it out here:
+Check it out here: https://mully7773.github.io/Bankist-App/
 
 ## Description
 
@@ -38,15 +38,21 @@ After a user logs in, they can transfer funds, requests loans, or close their ac
 Feel free to log in using any of the following credentials. Users may transfer money to other accounts using other usernames and transfer amounts in the transfer money box. The money transferred to that account is reflected instantly. Users can also close their account in the close account box by using the same credentials they used to log in.
 
 Jonas (Euros)
+<br>
 user: js
+<br>
 pin: 1111
 
 Jessica (Yen)
+<br>
 user: jd
+<br>
 pin: 2222
 
 Steven (U.S. Dollar)
+<br>
 user: stw
+<br>
 pin: 3333
 <br>
 <br>
