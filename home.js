@@ -83,7 +83,7 @@ btnScrollTo.addEventListener('click', function (e) {
 
 //Separate event listener for login to redirect user to the dashboard
 document.getElementById('login').addEventListener('click', function () {
-  window.location.assign('/Bankist-App/dashboard.html');
+  window.location.assign('/Bankist-App/pages/dashboard.html');
 });
 
 // Event Delegation:
