@@ -9,7 +9,7 @@ Check it out here: https://mully7773.github.io/Bankist-App/
 
 ## Description
 
-This is a mock-bank application I built with the help of Jonas Schmedtmann's JavaScript course. All rights belong to Jonas Schmedtmann. This project helped strengthen my DOM manipulation and vanilla JavaScript skills.
+This is a mock-bank application I built with the help of Jonas Schmedtmann's JavaScript course. All rights belong to Jonas Schmedtmann. This project helped strengthen my DOM manipulation and vanilla JavaScript skills. For the sake of learning and reviewing, I've left many comments throughout the code.
 
 <br>
 
