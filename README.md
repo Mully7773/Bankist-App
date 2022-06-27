@@ -9,23 +9,29 @@ Check it out here:
 
 ## Description
 
-This is a mock-bank application I built with the help of Jonas Schmedtmann's JavaScript course. All rights belong to Jonas Schmedtmann.
+This is a mock-bank application I built with the help of Jonas Schmedtmann's JavaScript course. All rights belong to Jonas Schmedtmann. This project helped strengthen my DOM manipulation and vanilla JavaScript skills.
 
-![Screenshot of homepage]()
+<br>
 
-![Screenshot of homepage section 1]()
+## Screenshots
 
-![Screenshot of homepage section 2]()
+![Screenshot of homepage](./img/screenshots/homepage-top.png)
 
-![Screenshot of homepage section 3]()
+![Screenshot of homepage section 2](./img/screenshots/tabbed-component.png)
 
-![Screenshot of logged in user account]()
+![Screenshot of homepage section 3](./img/screenshots/slider.png)
+
+![Screenshot of logged in user account](./img/screenshots/logged-in-user.png)
 
 ## Functionality
 
 The application features a seamless homepage UI that provides users with information about the banking functions and capabilities. The homepage utilizes many unique features such as smooth scrolling, lazy loaded images, hover and scroll effects, and more using vanilla JavaScript and the built-in Intersection Observer API. The code has been refactored for performance optimization, efficiency, and readabilty.
 <br>
+
+<hr>
 After a user logs in, they can transfer funds, requests loans, or close their account. Requesting loans takes three seconds to simulate taking time to receive a loan in the real world. The user's current balance, interest accumulation, and most recent transactions are displayed along with the date. Dates and currencies are updated and displayed using the built-in Intl API, so users from different countries can see their funds and dates in a more native setting. Finally, a logout timer successfully logs out a user if they are inactive for three full minutes. This feature was implemented to simulate the security logout function many modern websites include.
+<br>
+<br>
 
 ## Login Information
 
@@ -42,6 +48,8 @@ pin: 2222
 Steven (U.S. Dollar)
 user: stw
 pin: 3333
+<br>
+<br>
 
 ## Questions:
 
